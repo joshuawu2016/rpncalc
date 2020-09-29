@@ -84,11 +84,14 @@ public class RunningContext {
         // construct number stack string
         StringBuilder sb = new StringBuilder();
         sb.append("stack: ");
+        boolean hit = false;
         for (BigDecimal bd : current) {
             sb.append(df.format(bd));
             sb.append(' ');
+            hit = true;
         }
-        sb.setLength(sb.length() - 1);
+        if (hit)
+            sb.setLength(sb.length() - 1);
         return sb.toString();
     }
 

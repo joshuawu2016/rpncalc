@@ -68,7 +68,7 @@ public class RpnCalculatorTest {
                 Arrays.asList(
                         "stack: 3",
                         "stack: 0",
-                        "stack:")
+                        "stack: ")
         );
     }
 
@@ -131,7 +131,7 @@ public class RpnCalculatorTest {
     }
 
     @Test
-    public void execute_ok7() throws ExecutionException {
+    public void execute_insufficient_param1() throws ExecutionException {
         doTestAndVerify(
                 Arrays.asList(
                         "1 2 3 * 5 + * * 6 5"
@@ -143,6 +143,45 @@ public class RpnCalculatorTest {
         );
     }
 
+    @Test
+    public void execute_insufficient_param2() throws ExecutionException {
+        doTestAndVerify(
+                Arrays.asList(
+                        "     ",
+                        "+ /"
+                ),
+                Arrays.asList(
+                        "operator + (position: 1): insucient parameters",
+                        "stack: "
+                )
+        );
+    }
+
+    @Test
+    public void execute_sqrt_negative() throws ExecutionException {
+        doTestAndVerify(
+                Arrays.asList(
+                        "1 2 -2 sqrt"
+                ),
+                Arrays.asList(
+                        "operator sqrt (position: 8): sqrt negative is not allowed",
+                        "stack: 1 2 -2"
+                )
+        );
+    }
+
+    @Test
+    public void execute_divide_zero() throws ExecutionException {
+        doTestAndVerify(
+                Arrays.asList(
+                        "1 2 -2 + /"
+                ),
+                Arrays.asList(
+                        "operator / (position: 10): zero divide",
+                        "stack: 1 0"
+                )
+        );
+    }
     private void doTestAndVerify(List<String> input, List<String> expectOutput) {
         for (String in : input) {
             calc.process(in);

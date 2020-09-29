@@ -27,7 +27,7 @@ public class SqrtOperatorTest extends OperatorTestBase {
     }
 
     @Test
-    public void execute_exception_divide_by_zero() throws ExecutionException {
+    public void execute_exception_negative_sqrt() throws ExecutionException {
         exceptionRule.expect(CustomMatcher.hasCode(ErrorCode.NegativeSqrt));
         presetCurrNumberStack("-1");
         this.op.execute(this.rc);
